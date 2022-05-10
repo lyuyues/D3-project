@@ -53,20 +53,13 @@ var svg = d3.select('body').append("svg")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 d3.json("data.json", function(error, data) {
-console.log(data);
-// (6) [{…}, {…}, {…}, {…}, {…}, {…}]
-// 0: {categorie: 'Student', values: Array(5)}
-// 1: {categorie: 'Liberal Profession', values: Array(5)}
-// 2: {categorie: 'Salaried Staff', values: Array(5)}
-// 3: {categorie: 'Employee', values: Array(5)}
-// 4: {categorie: 'Craftsman', values: Array(5)}
-// 5: {categorie: 'Inactive', values: Array(5)}
-// length: 6
-// [[Prototype]]: Array(0)
 
   var categoriesNames = data.map(function(d) { return d.categorie; });
   var rateNames = data[0].values.map(function(d) { return d.rate; });
 
+  console.log(categoriesNames);
+  console.log(rateNames);
+  
   x0.domain(categoriesNames);
   x1.domain(rateNames).rangeRoundBands([0, x0.rangeBand()]);
   y.domain([0, d3.max(data, function(categorie) { return d3.max(categorie.values, function(d) { return d.value; }); })]);
@@ -94,8 +87,9 @@ console.log(data);
       .data(data)
       .enter().append("g")
       .attr("class", "g")
-      .attr("transform",function(d) { return "translate(" + x0(d.categorie) + ",0)"; });
-
+      .attr("transform",function(d) { console.log(d.categorie); return "translate(" + x0(d.categorie) + ",0)"; });
+    console.log(data);
+    
   slice.selectAll("rect")
       .data(function(d) { return d.values; })
   .enter().append("rect")
